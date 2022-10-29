@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const BtnAnimated = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div className='wrapper'>
+    <div className="wrapper">
       <button className="open-modal-btn" onClick={() => { setOpen(true) }}>✨ Открыть окно с анимацией</button>
       <div className={`overlay animated ${open ? 'show' : ''}`}>
         <div className="modal">
