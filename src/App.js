@@ -34,12 +34,13 @@ function App() {
 
   const onClickVariant = (index) => {
     // index - індекс вибранного варіанта відповіді
-    console.log(step, index);
+    // console.log(step, index);
+
     if (index === question.correct) {
       setCorrectQuestion(correctQuestion + 1);//лічильник ОК відповідей
     }
+    //   console.log('correctQuestion - ', correctQuestion);
 
-    console.log('correctQuestion - ', correctQuestion);
     setStep(step + 1);//переходимо до наступного питання
   }
 
