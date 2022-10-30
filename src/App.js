@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import Game from './components/Game';
+import Result from './components/Result';
 import './index.scss';
 
 const questions = [
@@ -22,37 +25,38 @@ const questions = [
   },
 ];
 
-function Result() {
-  return (
-    <div className="result">
-      <img src="https://cdn-icons-png.flaticon.com/512/2278/2278992.png" />
-      <h2>Вы отгадали 3 ответа из 10</h2>
-      <button>Попробовать снова</button>
-    </div>
-  );
-}
-
-function Game() {
-  return (
-    <>
-      <div className="progress">
-        <div style={{ width: '50%' }} className="progress__inner"></div>
-      </div>
-      <h1>Что такое useState?</h1>
-      <ul>
-        <li>Это функция для хранения данных компонента</li>
-        <li>Это глобальный стейт</li>
-        <li>Это когда на ты никому не нужен</li>
-      </ul>
-    </>
-  );
-}
-
 function App() {
+  const countQuestions = questions.length; //скільки питаннь всього   
+  const [step, setStep] = useState(0); // яка стадія опросу
+  const question = questions[step];//виймаємо перше питання з масиву
+  const [correctQuestion, setCorrectQuestion] = useState(0);//правильні відповіді
+  const percentage = Math.round(step / countQuestions * 100);
+
+  const onClickVariant = (index) => {
+    // index - індекс вибранного варіанта відповіді
+    console.log(step, index);
+    if (index === question.correct) {
+      setCorrectQuestion(correctQuestion + 1);//лічильник ОК відповідей
+    }
+
+    console.log('correctQuestion - ', correctQuestion);
+    setStep(step + 1);//переходимо до наступного питання
+  }
+
   return (
     <div className="App">
-      <Game />
-      {/* <Result /> */}
+      {
+        step !== countQuestions
+          ? <Game
+            percentage={percentage}
+            question={question}
+            onClickVariant={onClickVariant}
+          />
+          : <Result
+            correctQuestion={correctQuestion}
+            countQuestions={countQuestions}
+          />
+      }
     </div>
   );
 }
