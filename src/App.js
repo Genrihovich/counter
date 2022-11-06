@@ -8,6 +8,7 @@ import { Users } from './components/Users';
 function App() {
   const [users, setUsers] = useState([]); //массив юзеров
   const [isLoading, setLoading] = useState(true); //идет загрузка
+  const [searchValue, setSearchValue] = useState('');//пошук
 
   //отправляем запрос на бекенд
   useEffect(() => {
@@ -21,13 +22,17 @@ function App() {
       }).finally(() => setLoading(false)); //когда загружено прячем Sceleton
   }, []);
 
-
+  const onChangeSearchValue = (event) => {
+    setSearchValue(event.target.value)
+  }
 
   return (
     <div className="App">
       <Users
         items={users}
         isLoading={isLoading}
+        searchValue={searchValue}
+        onChangeSearchValue={onChangeSearchValue}
       />
       {/* <Success /> */}
     </div>
