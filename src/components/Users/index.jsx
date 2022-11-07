@@ -2,8 +2,8 @@ import React from 'react';
 import { Skeleton } from './Skeleton';
 import { User } from './User';
 
-export const Users = ({ items, isLoading, searchValue, onChangeSearchValue }) => {
-    // console.log(items);
+export const Users = ({ items, isLoading, searchValue, onChangeSearchValue, invites, onInviteClick }) => {
+    //console.log(invites);
     //console.log(searchValue);
     return (
         <>
@@ -33,7 +33,14 @@ export const Users = ({ items, isLoading, searchValue, onChangeSearchValue }) =>
                             return (fullName.toLowerCase().includes(searchValue.toLowerCase()) ||
                                 (obj.email.includes(searchValue.toLowerCase())))
                         })
-                            .map((obj) => <User key={obj.id} {...obj} />)
+                            .map((obj) =>
+                                <User
+                                    isInvited={invites.includes(obj.id)} //проверяем или есть такое id в приглашенных
+                                    key={obj.id}
+                                    {...obj}
+
+                                    onInviteClick={onInviteClick}
+                                />)
                     }
                 </ul>
             )}

@@ -7,8 +7,9 @@ import { Users } from './components/Users';
 
 function App() {
   const [users, setUsers] = useState([]); //массив юзеров
+  const [invites, setInvites] = useState([]); //массив приглашенных
   const [isLoading, setLoading] = useState(true); //идет загрузка
-  const [searchValue, setSearchValue] = useState('');//пошук
+  const [searchValue, setSearchValue] = useState('');//поиск
 
   //отправляем запрос на бекенд
   useEffect(() => {
@@ -26,6 +27,14 @@ function App() {
     setSearchValue(event.target.value)
   }
 
+  const onInviteClick = (id) => {
+    if (invites.includes(id)) {
+      setInvites(prev => prev.filter(_id => _id !== id))
+    } else {
+      setInvites((prev) => [...prev, id])
+    }
+  }
+
   return (
     <div className="App">
       <Users
@@ -33,6 +42,8 @@ function App() {
         isLoading={isLoading}
         searchValue={searchValue}
         onChangeSearchValue={onChangeSearchValue}
+        invites={invites}
+        onInviteClick={onInviteClick}
       />
       {/* <Success /> */}
     </div>
