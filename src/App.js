@@ -50,6 +50,7 @@ function App() {
       {isSend
         ? <Success
           onInit={onInit}
+          count={invites.length}
         />
         :
         <Users
