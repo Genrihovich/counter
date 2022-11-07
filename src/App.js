@@ -10,6 +10,7 @@ function App() {
   const [invites, setInvites] = useState([]); //массив приглашенных
   const [isLoading, setLoading] = useState(true); //идет загрузка
   const [searchValue, setSearchValue] = useState('');//поиск
+  const [isSend, SetSend] = useState(false)
 
   //отправляем запрос на бекенд
   useEffect(() => {
@@ -35,16 +36,31 @@ function App() {
     }
   }
 
+  const onClickSendInvites = () => {
+    SetSend(true);
+  }
+
+  const onInit = () => {
+    setInvites([]);
+    SetSend(false);
+  }
+
   return (
     <div className="App">
-      <Users
-        items={users}
-        isLoading={isLoading}
-        searchValue={searchValue}
-        onChangeSearchValue={onChangeSearchValue}
-        invites={invites}
-        onInviteClick={onInviteClick}
-      />
+      {isSend
+        ? <Success
+          onInit={onInit}
+        />
+        :
+        <Users
+          items={users}
+          isLoading={isLoading}
+          searchValue={searchValue}
+          onChangeSearchValue={onChangeSearchValue}
+          invites={invites}
+          onInviteClick={onInviteClick}
+          onClickSendInvites={onClickSendInvites}
+        />}
       {/* <Success /> */}
     </div>
   );
