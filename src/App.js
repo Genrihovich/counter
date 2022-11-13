@@ -20,8 +20,15 @@ function App() {
         //  console.log(json.rates);
       })
       .catch(err => {
-        console.warn(err);
-        alert('Не удалось загрузить данные')
+        //console.warn(err);
+        //alert('Не удалось загрузить данные')
+        setRates({
+          "UAH": 37.122896,
+          "USD": 1,
+          "EUR": 0.98161,
+          "GBP": 0.828329
+        })
+        console.log(rates)
       })
   }, []);
 
