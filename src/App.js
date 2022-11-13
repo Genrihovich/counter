@@ -3,21 +3,24 @@ import { Block } from './Block';
 import './index.scss';
 
 //https://cdn.cur.su/api/latest.json
+// https://api.currencylayer.com/list?access_key=UhCP9mFXslQgNeBweqQYjl4wVeG1tXaD
 
 function App() {
 
   const [rates, setRates] = useState({});// курсы валют
-  const [currencyTo, setCurrencyTo] = useState('UAH');
-  const [currencyFrom, setCurrencyFrom] = useState('USD');
-  const [valueTo, setValueTo] = useState(0);
+  const [currencyFrom, setCurrencyFrom] = useState('UAH');//от 
+  const [currencyTo, setCurrencyTo] = useState('USD');//куда
+
   const [valueFrom, setValueFrom] = useState(0);
+  const [valueTo, setValueTo] = useState(0);
+
 
   useEffect(() => {
     fetch('https://cdn.cur.su/api/latest.json')
       .then((response) => response.json())
       .then((json) => {
         setRates(json.rates)
-        //  console.log(json.rates);
+        console.log(json.rates);
       })
       .catch(err => {
         //console.warn(err);
@@ -32,34 +35,28 @@ function App() {
       })
   }, []);
 
-  const onChangeCurrencyTo = (cur) => {
-    setCurrencyTo(cur);
-  };
-  const onChangeCurrencyFrom = (cur) => {
-    setCurrencyFrom(cur);
-  };
-
-  const onChangeValueTo = (e) => {
-    setValueTo(e);
+  const onChangeValueFrom = (value) => {
+    setValueFrom(value);
   }
-  const onChangeValueFrom = (e) => {
-    setValueFrom(e);
+  const onChangeValueTo = (value) => {
+    setValueTo(value);
   }
 
 
   return (
     <div className="App">
       <Block
-        value={valueTo}
-        currency={currencyTo}
-        onChangeCurrency={onChangeCurrencyTo}
-        onChangeValue={onChangeValueTo}
-      />
-      <Block
         value={valueFrom}
         currency={currencyFrom}
-        onChangeCurrency={onChangeCurrencyFrom}
+        // onChangeCurrency={(cur) => setCurrencyFrom(cur)}  
+        onChangeCurrency={setCurrencyFrom}
         onChangeValue={onChangeValueFrom}
+      />
+      <Block
+        value={valueTo}
+        currency={currencyTo}
+        onChangeCurrency={setCurrencyTo}
+        onChangeValue={onChangeValueTo}
       />
     </div>
   );
